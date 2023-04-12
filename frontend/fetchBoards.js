@@ -22,13 +22,33 @@ axios
           const title = fetchBoardData.title;
           const content = fetchBoardData.content;
           // 3. boardlist에 a태그를 추가한다.
-          let boardList = document.getElementById("board-list");
+          let boardList = document.querySelector(".board-list");
           const a = document.createElement("a");
           a.href = `http://localhost:5501/frontend/board.html?id=${id}`;
-          a.innerHTML = `순번 : ${i + 1} / 제목 : ${title}`;
+          a.innerHTML = `${title}`;
           const div = document.createElement("div");
           div.appendChild(a);
           boardList.appendChild(div);
+          // 4. board number 추가.
+          let boardNumber = document.querySelector(".board-number");
+          const boardNumberDiv = document.createElement("div");
+          boardNumberDiv.innerHTML = "번호";
+          boardNumber.appendChild(boardNumberDiv);
+          // 5. board writer 추가
+          let boardWriter = document.querySelector(".board-writer");
+          const boardWriterDiv = document.createElement("div");
+          boardWriterDiv.innerHTML = "작성자";
+          boardWriter.appendChild(boardWriterDiv);
+          // 6. board date 추가
+          let boardDate = document.querySelector(".board-date");
+          const boardDateDiv = document.createElement("div");
+          boardDateDiv.innerHTML = "작성일";
+          boardDate.appendChild(boardDateDiv);
+          // 7. board clcik 추가
+          let boardClick = document.querySelector(".board-click");
+          const boardClickDiv = document.createElement("div");
+          boardClickDiv.innerHTML = "조회";
+          boardClick.appendChild(boardClickDiv);
         });
     }
   });

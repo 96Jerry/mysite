@@ -2,33 +2,45 @@
 <html lang="ko">
   <head>
     <title>홈페이지</title>
-    <style>
-      button {
-        cursor: pointer;
-        display: inline-block;
-        font-weight: 400;
-        color: #212529;
-        text-align: center;
-        vertical-align: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        background-color: #fff;
-        border: 1px solid #ced4da;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: 0.25rem;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      }
-    </style>
+    <style></style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   </head>
   <body>
+    <h3>전체게시글</h3>
+    <hr />
+    <table>
+      <caption>
+        <span>게시물 목록</span>
+      </caption>
+      <colgroup>
+        <col style="width: 88px" />
+        <col style="width: 88px" />
+        <col style="width: 88px" />
+        <col style="width: 88px" />
+        <col style="width: 88px" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">작성일</th>
+          <th scope="col">조회</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="board-number"></td>
+          <td class="board-list"></td>
+          <td class="board-writer"></td>
+          <td class="board-date"></td>
+          <td class="board-click"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script src="./fetchBoards.js"></script>
     <button
       onclick="location.href
       ='http://localhost:5501/frontend/createBoard.html'"
@@ -36,9 +48,5 @@
     >
       게시글 생성
     </button>
-
-    <h3>게시글 목록</h3>
-    <div id="board-list"></div>
-    <script src="./fetchBoards.js"></script>
   </body>
 </html>
