@@ -13,12 +13,16 @@ const apollo_1 = require("@nestjs/apollo");
 const board_module_1 = require("./apis/board/board.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = require("dotenv");
+const user_module_1 = require("./apis/user/user.module");
+const auth_module_1 = require("./apis/auth/auth.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            auth_module_1.AuthModule,
+            user_module_1.UserModule,
             board_module_1.BoardModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: "mysql",
@@ -32,7 +36,7 @@ AppModule = __decorate([
             }),
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
-                autoSchemaFile: "src/commons/schema.gql",
+                autoSchemaFile: "src/commons/graphql/schema.gql",
             }),
         ],
     })

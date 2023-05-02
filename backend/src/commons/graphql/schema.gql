@@ -15,9 +15,16 @@ type Query {
 }
 
 type Mutation {
+  createUser(createUserInput: createUserInput!): String!
+  deleteUser(userId: String!): String!
   createBoard(board: CreateBoardInput!): Board!
   updateBoard(id: String!, board: CreateBoardInput!): Board!
   deleteBoard(id: String!): String!
+}
+
+input createUserInput {
+  userId: String!
+  userPwd: String!
 }
 
 input CreateBoardInput {

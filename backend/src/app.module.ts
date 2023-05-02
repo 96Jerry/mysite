@@ -5,11 +5,15 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { BoardModule } from "./apis/board/board.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import * as dotenv from "dotenv";
+import { UserModule } from "./apis/user/user.module";
+import { AuthModule } from "./apis/auth/auth.module";
 
 dotenv.config();
 
 @Module({
   imports: [
+    AuthModule,
+    UserModule,
     BoardModule,
     TypeOrmModule.forRoot({
       type: "mysql",
@@ -23,7 +27,7 @@ dotenv.config();
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: "src/commons/schema.gql",
+      autoSchemaFile: "src/commons/graphql/schema.gql",
     }),
   ],
   // controllers: [AppController],
