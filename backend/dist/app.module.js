@@ -37,6 +37,7 @@ AppModule = __decorate([
             graphql_1.GraphQLModule.forRoot({
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: "src/commons/graphql/schema.gql",
+                context: ({ req, res }) => ({ req, res }),
             }),
         ],
     })

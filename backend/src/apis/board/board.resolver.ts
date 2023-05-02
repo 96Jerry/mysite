@@ -2,6 +2,9 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { BoardService } from "./board.service";
 import { Board } from "./entities/board.entity";
 import { CreateBoardInput } from "./dto/createboard.input";
+import { UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
 
 @Resolver()
 export class BoardResolver {
@@ -21,6 +24,7 @@ export class BoardResolver {
     return this.boardService.find({ id });
   }
 
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   createBoard(
     @Args("board") board: CreateBoardInput //

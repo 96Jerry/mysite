@@ -17,6 +17,8 @@ const graphql_1 = require("@nestjs/graphql");
 const board_service_1 = require("./board.service");
 const board_entity_1 = require("./entities/board.entity");
 const createboard_input_1 = require("./dto/createboard.input");
+const common_1 = require("@nestjs/common");
+const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
 let BoardResolver = class BoardResolver {
     constructor(boardService) {
         this.boardService = boardService;
@@ -51,6 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BoardResolver.prototype, "fetchBoard", null);
 __decorate([
+    (0, common_1.UseGuards)(gql_auth_guard_1.GqlAuthAccessGuard),
     (0, graphql_1.Mutation)(() => board_entity_1.Board),
     __param(0, (0, graphql_1.Args)("board")),
     __metadata("design:type", Function),

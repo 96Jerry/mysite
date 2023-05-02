@@ -4,7 +4,7 @@ export declare class JwtAccessStrategy extends JwtAccessStrategy_base {
     constructor();
     validate(payload: any): Promise<{
         userId: any;
-        userame: any;
+        userPwd: any;
     }>;
 }
 export {};

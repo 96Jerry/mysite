@@ -11,16 +11,19 @@ const common_1 = require("@nestjs/common");
 const auth_resolver_1 = require("./auth.resolver");
 const auth_service_1 = require("./auth.service");
 const jwt_1 = require("@nestjs/jwt");
-const jwt_access_strategy_1 = require("../../commons/auth/jwt-access.strategy");
+const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("../user/entities/user.entity");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
-        imports: [jwt_1.JwtModule.register({})],
+        imports: [
+            jwt_1.JwtModule.register({}),
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
+        ],
         providers: [
             auth_resolver_1.AuthResolver,
             auth_service_1.AuthService,
-            jwt_access_strategy_1.JwtAccessStrategy,
         ],
     })
 ], AuthModule);

@@ -28,6 +28,7 @@ dotenv.config();
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: "src/commons/graphql/schema.gql",
+      context: ({ req, res }) => ({ req, res }),
     }),
   ],
   // controllers: [AppController],

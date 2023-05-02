@@ -21,7 +21,7 @@ let JwtAccessStrategy = class JwtAccessStrategy extends (0, passport_1.PassportS
         });
     }
     async validate(payload) {
-        return { userId: payload.sub, userame: payload.username };
+        return { userId: payload.userId, userPwd: payload.userPwd };
     }
 };
 JwtAccessStrategy = __decorate([

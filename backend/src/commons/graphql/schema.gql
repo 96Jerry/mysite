@@ -15,6 +15,7 @@ type Query {
 }
 
 type Mutation {
+  login(user: createUserInput!): String!
   createUser(createUserInput: createUserInput!): String!
   deleteUser(userId: String!): String!
   createBoard(board: CreateBoardInput!): Board!

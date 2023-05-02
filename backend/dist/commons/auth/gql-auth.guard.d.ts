@@ -1,4 +1,6 @@
-import { CanActivate, ExecutionContext } from "@nestjs/common";
-export declare class AuthGuard implements CanActivate {
-    canActivate(context: ExecutionContext): boolean;
+import { ExecutionContext } from "@nestjs/common";
+declare const GqlAuthAccessGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
+export declare class GqlAuthAccessGuard extends GqlAuthAccessGuard_base {
+    getRequest(context: ExecutionContext): any;
 }
+export {};
