@@ -24,8 +24,10 @@ let AuthService = class AuthService {
         this.userRepository = userRepository;
     }
     async login({ user }) {
-        const userData = await this.userRepository.find(user.userId);
-        if (userData[0].userPwd === user.userPwd) {
+        const userData = await this.userRepository.findOne({
+            where: { userId: user.userId },
+        });
+        if (userData.userPwd === user.userPwd) {
             const JwtToken = this.jwtService.sign({ userId: user.userId, userPwd: user.userPwd }, { expiresIn: "1h", secret: "myAccessKey" });
             return JwtToken;
         }

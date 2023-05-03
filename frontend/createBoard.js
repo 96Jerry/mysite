@@ -16,9 +16,15 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
         }
       }
       `;
-  axios.post("http://localhost:3000/graphql", { query }).then((res) => {
-    // console.log(res.data.data.createBoard.id);
-    alert("생성완료");
-    window.location.href = "homepage.html";
-  });
+  axios
+    .post(
+      "http://localhost:3000/graphql",
+      { query },
+      { headers: { Authorization: `${document.cookie}` } }
+    )
+    .then((res) => {
+      // console.log(res.data.data.createBoard.id);
+      alert("생성완료");
+      window.location.href = "homepage.html";
+    });
 });

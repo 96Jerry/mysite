@@ -15,4 +15,9 @@ export class UserService {
       : "fail";
   }
   delete({ userId }) {}
+
+  find({ currentUser }) {
+    // console.log(currentUser);
+    return currentUser.userId;
+  }
 }

@@ -19,6 +19,7 @@ const board_entity_1 = require("./entities/board.entity");
 const createboard_input_1 = require("./dto/createboard.input");
 const common_1 = require("@nestjs/common");
 const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
+const gql_user_param_1 = require("../../commons/auth/gql-user.param");
 let BoardResolver = class BoardResolver {
     constructor(boardService) {
         this.boardService = boardService;
@@ -29,8 +30,8 @@ let BoardResolver = class BoardResolver {
     fetchBoard(id) {
         return this.boardService.find({ id });
     }
-    createBoard(board) {
-        return this.boardService.create({ board });
+    createBoard(board, currentUser) {
+        return this.boardService.create({ board, currentUser });
     }
     updateBoard(id, board) {
         return this.boardService.update({ id, board });
@@ -56,8 +57,9 @@ __decorate([
     (0, common_1.UseGuards)(gql_auth_guard_1.GqlAuthAccessGuard),
     (0, graphql_1.Mutation)(() => board_entity_1.Board),
     __param(0, (0, graphql_1.Args)("board")),
+    __param(1, (0, gql_user_param_1.CurrentUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createboard_input_1.CreateBoardInput]),
+    __metadata("design:paramtypes", [createboard_input_1.CreateBoardInput, Object]),
     __metadata("design:returntype", void 0)
 ], BoardResolver.prototype, "createBoard", null);
 __decorate([

@@ -1,7 +1,36 @@
+// 홈페이지에 fetchboards를 할 때는 현재 로그인한 사람의 정보를 가져오지 않고 테이블에서 정보를 가져온다.
+
+const getUserInfo = async () => {
+  const query = `
+          query {
+            fetchLoginUser
+          }
+        `;
+
+  try {
+    const res = await axios.post(
+      "http://localhost:3000/graphql",
+      { query },
+      // prettier-ignore
+      { headers: { "Authorization": document.cookie } }
+    );
+
+    loggedInUserId = res.data.data.fetchLoginUser;
+    return loggedInUserId;
+  } catch (error) {
+    return "로그인이 필요합니다.";
+  }
+};
+
+const userInfoDiv = document.querySelector("div");
+getUserInfo().then((res) => {
+  userInfoDiv.textContent = `회원정보: ${res}`;
+});
+
 // 1. axios로 graphql 요청 : fetchBoards로 모든 id 값을 불러온다.
 const fetchBoardsQuery = `query {
       fetchBoards
-      { id, number, title, content } } `;
+      { id } } `;
 axios
   .post("http://localhost:3000/graphql", { query: fetchBoardsQuery })
   .then(async (res) => {
@@ -13,11 +42,13 @@ axios
       const fetchBoardQuery = `
       query {
       fetchBoard(id : "${id}")
-      { id, number, title, content } } `;
+      { id, number, title, content, user{userId} } } `;
       await axios
         .post("http://localhost:3000/graphql", { query: fetchBoardQuery })
         .then(async (res) => {
           const fetchBoardData = res.data.data.fetchBoard;
+          // console.log(fetchBoardData.user.userId);
+          const writer = fetchBoardData.user.userId;
           const number = fetchBoardData.number;
           const title = fetchBoardData.title;
           const content = fetchBoardData.content;
@@ -37,7 +68,7 @@ axios
           // 5. board writer 추가
           let boardWriter = document.querySelector(".board-writer");
           const boardWriterDiv = document.createElement("div");
-          boardWriterDiv.innerHTML = "작성자";
+          boardWriterDiv.innerHTML = writer;
           boardWriter.appendChild(boardWriterDiv);
           // 6. board date 추가
           let boardDate = document.querySelector(".board-date");

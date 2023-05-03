@@ -27,6 +27,9 @@ let UserService = class UserService {
             : "fail";
     }
     delete({ userId }) { }
+    find({ currentUser }) {
+        return currentUser.userId;
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

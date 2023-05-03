@@ -2,14 +2,21 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  userId: String!
+  userPwd: String!
+}
+
 type Board {
   id: String!
   number: Int!
   title: String!
   content: String!
+  user: User!
 }
 
 type Query {
+  fetchLoginUser: String!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
 }

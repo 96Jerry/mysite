@@ -17,20 +17,29 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const board_entity_1 = require("./entities/board.entity");
 const typeorm_2 = require("@nestjs/typeorm");
+const user_entity_1 = require("../user/entities/user.entity");
 let BoardService = class BoardService {
-    constructor(boardRepository) {
+    constructor(boardRepository, userRepository) {
         this.boardRepository = boardRepository;
+        this.userRepository = userRepository;
     }
     async findAll() {
-        return await this.boardRepository.find({ order: { CreatedAt: "ASC" } });
+        const a = await this.boardRepository.find({
+            order: { createdAt: "ASC" },
+        });
+        return a;
     }
-    async create({ board }) {
-        return await this.boardRepository.save(board);
+    async create({ board, currentUser }) {
+        const user = await this.userRepository.findOne({
+            where: { userId: currentUser.userId },
+        });
+        return await this.boardRepository.save(Object.assign(Object.assign({}, board), { user }));
     }
     async find({ id }) {
         return await this.boardRepository.findOne({
             where: { id: id },
-            order: { CreatedAt: "ASC" },
+            order: { createdAt: "ASC" },
+            relations: ["user"],
         });
     }
     async update({ id, board }) {
@@ -44,7 +53,9 @@ let BoardService = class BoardService {
 BoardService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(board_entity_1.Board)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __param(1, (0, typeorm_2.InjectRepository)(user_entity_1.User)),
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        typeorm_1.Repository])
 ], BoardService);
 exports.BoardService = BoardService;
 //# sourceMappingURL=board.service.js.map

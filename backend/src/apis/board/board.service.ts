@@ -2,25 +2,38 @@ import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Board } from "./entities/board.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "../user/entities/user.entity";
 
 @Injectable()
 export class BoardService {
   constructor(
     @InjectRepository(Board)
-    private readonly boardRepository: Repository<Board> //
+    private readonly boardRepository: Repository<Board>, //
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
   ) {}
 
   async findAll() {
-    return await this.boardRepository.find({ order: { CreatedAt: "ASC" } });
+    const a = await this.boardRepository.find({
+      order: { createdAt: "ASC" },
+    });
+
+    return a;
   }
-  async create({ board }) {
-    return await this.boardRepository.save(board);
+  async create({ board, currentUser }) {
+    // console.log(currentUser);
+    const user = await this.userRepository.findOne({
+      where: { userId: currentUser.userId },
+    });
+    // console.log(user);
+    return await this.boardRepository.save({ ...board, user });
   }
 
   async find({ id }) {
     return await this.boardRepository.findOne({
       where: { id: id },
-      order: { CreatedAt: "ASC" },
+      order: { createdAt: "ASC" },
+      relations: ["user"],
     });
   }
 

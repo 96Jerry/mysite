@@ -25,7 +25,7 @@ let AuthResolver = class AuthResolver {
         if (jwtToken === "fail")
             return "fail";
         else {
-            context.res.setHeader("set-Cookie", `accessToken=${jwtToken}`);
+            context.res.setHeader("Set-Cookie", `Bearer ${jwtToken}; path=/;`);
             return "success";
         }
     }

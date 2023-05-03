@@ -3,8 +3,8 @@ import { BoardService } from "./board.service";
 import { Board } from "./entities/board.entity";
 import { CreateBoardInput } from "./dto/createboard.input";
 import { UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
+import { CurrentUser } from "src/commons/auth/gql-user.param";
 
 @Resolver()
 export class BoardResolver {
@@ -27,9 +27,10 @@ export class BoardResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   createBoard(
-    @Args("board") board: CreateBoardInput //
+    @Args("board") board: CreateBoardInput, //
+    @CurrentUser() currentUser: any
   ) {
-    return this.boardService.create({ board });
+    return this.boardService.create({ board, currentUser });
   }
 
   @Mutation(() => Board)

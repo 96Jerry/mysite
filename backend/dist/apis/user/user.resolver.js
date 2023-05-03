@@ -16,9 +16,15 @@ exports.UserResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const user_service_1 = require("./user.service");
 const createUser_input_1 = require("./dto/createUser.input");
+const gql_user_param_1 = require("../../commons/auth/gql-user.param");
+const common_1 = require("@nestjs/common");
+const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
 let UserResolver = class UserResolver {
     constructor(userService) {
         this.userService = userService;
+    }
+    fetchLoginUser(currentUser) {
+        return this.userService.find({ currentUser });
     }
     createUser(createUserInput) {
         return this.userService.create({ createUserInput });
@@ -27,6 +33,14 @@ let UserResolver = class UserResolver {
         return this.userService.delete({ userId });
     }
 };
+__decorate([
+    (0, common_1.UseGuards)(gql_auth_guard_1.GqlAuthAccessGuard),
+    (0, graphql_1.Query)(() => String),
+    __param(0, (0, gql_user_param_1.CurrentUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "fetchLoginUser", null);
 __decorate([
     (0, graphql_1.Mutation)(() => String),
     __param(0, (0, graphql_1.Args)("createUserInput")),

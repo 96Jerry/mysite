@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const user_entity_1 = require("../../user/entities/user.entity");
 const typeorm_1 = require("typeorm");
 let Board = class Board {
 };
@@ -37,7 +38,12 @@ __decorate([
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ nullable: false }),
     __metadata("design:type", Date)
-], Board.prototype, "CreatedAt", void 0);
+], Board.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User),
+    (0, graphql_1.Field)(() => user_entity_1.User),
+    __metadata("design:type", user_entity_1.User)
+], Board.prototype, "user", void 0);
 Board = __decorate([
     (0, typeorm_1.Entity)(),
     (0, graphql_1.ObjectType)()

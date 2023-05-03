@@ -6,7 +6,7 @@ export declare class BoardResolver {
     constructor(boardService: BoardService);
     fetchBoards(): Promise<Board[]>;
     fetchBoard(id: string): Promise<Board>;
-    createBoard(board: CreateBoardInput): Promise<any>;
+    createBoard(board: CreateBoardInput, currentUser: any): Promise<any>;
     updateBoard(id: string, board: CreateBoardInput): Promise<any>;
     deleteBoard(id: string): Promise<string>;
 }
