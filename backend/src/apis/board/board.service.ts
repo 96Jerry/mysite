@@ -33,7 +33,7 @@ export class BoardService {
     return await this.boardRepository.findOne({
       where: { id: id },
       order: { createdAt: "ASC" },
-      relations: ["user"],
+      relations: ["user"], // 주석
     });
   }
 
