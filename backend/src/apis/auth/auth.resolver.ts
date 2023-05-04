@@ -3,16 +3,25 @@ import {
   Context,
   GraphQLExecutionContext,
   Mutation,
+  Query,
   Resolver,
 } from "@nestjs/graphql";
 import { createUserInput } from "../user/dto/createUser.input";
 import { AuthService } from "./auth.service";
+import { UseGuards } from "@nestjs/common";
+import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
 
 @Resolver()
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService //
   ) {}
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => Boolean)
+  isLoggedin() {
+    return true;
+  }
 
   @Mutation(() => String)
   async login(

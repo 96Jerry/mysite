@@ -24,7 +24,11 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
     )
     .then((res) => {
       // console.log(res.data.data.createBoard.id);
-      alert("생성완료");
-      window.location.href = "homepage.html";
+      if (res.data.data === null) {
+        alert("login need");
+      } else {
+        alert("생성완료");
+        window.location.href = "homepage.html";
+      }
     });
 });

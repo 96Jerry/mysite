@@ -30,6 +30,7 @@
             number
             title
             content
+            user{userId}
         }
       }
       `;
@@ -43,11 +44,13 @@
           number = data.number;
           title = data.title;
           content = data.content;
+          writer = data.user.userId;
 
           document.title = number;
           document.getElementById("number").innerHTML = number;
           document.getElementById("title").innerHTML = title;
           document.getElementById("content").innerHTML = content;
+          document.getElementById("writer").innerHTML = writer;
         });
     </script>
     <title></title>
@@ -58,10 +61,35 @@
     <div id="number"></div>
     <div id="title"></div>
     <div id="content"></div>
+    <div id="writer"></div>
     <script>
-      document.getElementById("update-btn").addEventListener("click", () => {
-        window.location.href = `http://localhost:5501/frontend/updateBoard.html?id=${id}`;
-      });
+      // 보드 id로 그 보드의 작성 유저 아이디를 query. 작성 유저 id와 현재 유저 id가 같으면 실행. axios 요청을 보내고 결과가 같으면 실행
+      document
+        .getElementById("update-btn")
+        .addEventListener("click", async () => {
+          const query = `query{
+          fetchLoginUser
+        }`;
+          await axios
+            .post(
+              "http://localhost:3000/graphql",
+              { query },
+              //prettier-ignore
+              {headers: {"Authorization": document.cookie}}
+            )
+            .then((res) => {
+              const loginUser = res.data.data.fetchLoginUser;
+              // console.log(loginUser, writer);
+              if (loginUser === writer) {
+                window.location.href = `http://localhost:5501/frontend/updateBoard.html?id=${id}`;
+              } else {
+                alert("작성자가 아닙니다");
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        });
       document.getElementById("delete-btn").addEventListener("click", () => {
         const query = `
           mutation{

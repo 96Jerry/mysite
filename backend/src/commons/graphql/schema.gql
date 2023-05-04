@@ -16,6 +16,7 @@ type Board {
 }
 
 type Query {
+  isLoggedin: Boolean!
   fetchLoginUser: String!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!

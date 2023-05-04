@@ -16,9 +16,14 @@ exports.AuthResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const createUser_input_1 = require("../user/dto/createUser.input");
 const auth_service_1 = require("./auth.service");
+const common_1 = require("@nestjs/common");
+const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
 let AuthResolver = class AuthResolver {
     constructor(authService) {
         this.authService = authService;
+    }
+    isLoggedin() {
+        return true;
     }
     async login(user, context) {
         const jwtToken = await this.authService.login({ user });
@@ -30,6 +35,13 @@ let AuthResolver = class AuthResolver {
         }
     }
 };
+__decorate([
+    (0, common_1.UseGuards)(gql_auth_guard_1.GqlAuthAccessGuard),
+    (0, graphql_1.Query)(() => Boolean),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthResolver.prototype, "isLoggedin", null);
 __decorate([
     (0, graphql_1.Mutation)(() => String),
     __param(0, (0, graphql_1.Args)("user")),

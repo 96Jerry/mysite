@@ -1,5 +1,27 @@
-// 홈페이지에 fetchboards를 할 때는 현재 로그인한 사람의 정보를 가져오지 않고 테이블에서 정보를 가져온다.
+document.getElementById("createBoards").addEventListener("click", () => {
+  const query = `query{
+    isLoggedin
+  }`;
+  axios
+    .post(
+      "http://localhost:3000/graphql",
+      { query },
+      // prettier-ignore
+      { headers: { "Authorization": document.cookie } }
+    )
+    .then((res) => {
+      try {
+        const isLoggedin = res.data.data.isLoggedin;
+        if (isLoggedin)
+          window.location.href =
+            "http://localhost:5501/frontend/createBoard.html";
+      } catch (e) {
+        alert("로그인이 필요합니다");
+      }
+    });
+});
 
+// 홈페이지에 fetchboards를 할 때는 현재 로그인한 사람의 정보를 가져오지 않고 테이블에서 정보를 가져온다.
 const getUserInfo = async () => {
   const query = `
           query {
