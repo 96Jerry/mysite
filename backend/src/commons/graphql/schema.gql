@@ -4,7 +4,6 @@
 
 type User {
   userId: String!
-  userPwd: String!
 }
 
 type Board {
@@ -24,6 +23,7 @@ type Query {
 
 type Mutation {
   login(user: createUserInput!): String!
+  restoreAccessToken: String!
   createUser(createUserInput: createUserInput!): String!
   deleteUser(userId: String!): String!
   createBoard(board: CreateBoardInput!): Board!

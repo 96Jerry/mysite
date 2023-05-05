@@ -9,27 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
-const graphql_1 = require("@nestjs/graphql");
-const typeorm_1 = require("typeorm");
-let User = class User {
+exports.JwtAccessStrategy = void 0;
+const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
+const passport_jwt_1 = require("passport-jwt");
+let JwtAccessStrategy = class JwtAccessStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, "access") {
+    constructor() {
+        super({
+            jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: "myAccessKey",
+        });
+    }
+    async validate(payload) {
+        return { userId: payload.userId, userPwd: payload.userPwd };
+    }
 };
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
-    __metadata("design:type", String)
-], User.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    (0, graphql_1.Field)(() => String),
-    __metadata("design:type", String)
-], User.prototype, "userId", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], User.prototype, "userPwd", void 0);
-User = __decorate([
-    (0, typeorm_1.Entity)(),
-    (0, graphql_1.ObjectType)()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entity.js.map
+JwtAccessStrategy = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
+], JwtAccessStrategy);
+exports.JwtAccessStrategy = JwtAccessStrategy;
+//# sourceMappingURL=jwt-access.strategy%20copy.js.map

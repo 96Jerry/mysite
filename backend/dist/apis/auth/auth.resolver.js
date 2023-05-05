@@ -18,21 +18,39 @@ const createUser_input_1 = require("../user/dto/createUser.input");
 const auth_service_1 = require("./auth.service");
 const common_1 = require("@nestjs/common");
 const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
+const user_service_1 = require("../user/user.service");
+const bcrypt = require("bcrypt");
+const gql_user_param_1 = require("../../commons/auth/gql-user.param");
 let AuthResolver = class AuthResolver {
-    constructor(authService) {
+    constructor(authService, userService) {
         this.authService = authService;
+        this.userService = userService;
     }
     isLoggedin() {
         return true;
     }
     async login(user, context) {
-        const jwtToken = await this.authService.login({ user });
-        if (jwtToken === "fail")
-            return "fail";
-        else {
-            context.res.setHeader("Set-Cookie", `Bearer ${jwtToken}; path=/;`);
-            return "success";
+        const dbUser = await this.userService.findOne({ user });
+        const checkUser = await bcrypt.compare(user.userPwd, dbUser.userPwd);
+        let accessToken, refreshToken;
+        if (checkUser) {
+            accessToken = await this.authService.setAccessToken({ user });
+            refreshToken = await this.authService.setRefreshToken({ user });
         }
+        else {
+            return "fail";
+        }
+        context.res.setHeader("set-cookie", [
+            `accessToken=Bearer ${accessToken}; path=/;`,
+            `refreshToken=${refreshToken}; path=/;`,
+        ]);
+        return "success";
+    }
+    async restoreAccessToken(currentUser, context) {
+        const accessToken = await this.authService.setAccessToken({
+            user: currentUser,
+        });
+        context.res.setHeader("set-cookie", `accessToken=Bearer ${accessToken}; path=/;`);
     }
 };
 __decorate([
@@ -50,9 +68,19 @@ __decorate([
     __metadata("design:paramtypes", [createUser_input_1.createUserInput, Object]),
     __metadata("design:returntype", Promise)
 ], AuthResolver.prototype, "login", null);
+__decorate([
+    (0, common_1.UseGuards)(gql_auth_guard_1.GqlAuthRefreshGuard),
+    (0, graphql_1.Mutation)(() => String),
+    __param(0, (0, gql_user_param_1.CurrentUser)()),
+    __param(1, (0, graphql_1.Context)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthResolver.prototype, "restoreAccessToken", null);
 AuthResolver = __decorate([
     (0, graphql_1.Resolver)(),
-    __metadata("design:paramtypes", [auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        user_service_1.UserService])
 ], AuthResolver);
 exports.AuthResolver = AuthResolver;
 //# sourceMappingURL=auth.resolver.js.map

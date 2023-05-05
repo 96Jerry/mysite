@@ -23,8 +23,9 @@ let UserResolver = class UserResolver {
     constructor(userService) {
         this.userService = userService;
     }
-    fetchLoginUser(currentUser) {
-        return this.userService.find({ currentUser });
+    async fetchLoginUser(currentUser) {
+        const user = await this.userService.findOne({ user: currentUser });
+        return user.userId;
     }
     createUser(createUserInput) {
         return this.userService.create({ createUserInput });
@@ -39,7 +40,7 @@ __decorate([
     __param(0, (0, gql_user_param_1.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "fetchLoginUser", null);
 __decorate([
     (0, graphql_1.Mutation)(() => String),

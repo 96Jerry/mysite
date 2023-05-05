@@ -11,14 +11,17 @@ export class UserResolver {
   constructor(
     private readonly userService: UserService //
   ) {}
+  // 현재 발급받은 토큰으로 유저 아이디를 조회 api
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => String)
-  fetchLoginUser(
+  async fetchLoginUser(
     @CurrentUser() currentUser: any //
   ) {
-    return this.userService.find({ currentUser });
+    const user = await this.userService.findOne({ user: currentUser });
+    return user.userId;
   }
 
+  // 회원가입 api
   @Mutation(() => String)
   createUser(
     @Args("createUserInput") createUserInput: createUserInput //

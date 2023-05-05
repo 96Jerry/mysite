@@ -5,7 +5,10 @@ export declare class AuthService {
     private readonly jwtService;
     private readonly userRepository;
     constructor(jwtService: JwtService, userRepository: Repository<User>);
-    login({ user }: {
+    setAccessToken({ user }: {
+        user: any;
+    }): Promise<string>;
+    setRefreshToken({ user }: {
         user: any;
     }): Promise<string>;
 }

@@ -9,7 +9,7 @@ export declare class UserService {
     delete({ userId }: {
         userId: any;
     }): void;
-    find({ currentUser }: {
-        currentUser: any;
-    }): any;
+    findOne({ user }: {
+        user: any;
+    }): Promise<User>;
 }

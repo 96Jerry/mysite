@@ -13,6 +13,8 @@ const auth_service_1 = require("./auth.service");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../user/entities/user.entity");
+const user_service_1 = require("../user/user.service");
+const jwt_refresh_strategy_1 = require("../../commons/auth/jwt-refresh.strategy");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -24,6 +26,8 @@ AuthModule = __decorate([
         providers: [
             auth_resolver_1.AuthResolver,
             auth_service_1.AuthService,
+            user_service_1.UserService,
+            jwt_refresh_strategy_1.JwtRefreshStrategy,
         ],
     })
 ], AuthModule);

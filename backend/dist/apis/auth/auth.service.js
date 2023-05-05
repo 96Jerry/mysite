@@ -23,16 +23,13 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }
-    async login({ user }) {
-        const userData = await this.userRepository.findOne({
-            where: { userId: user.userId },
-        });
-        if (userData.userPwd === user.userPwd) {
-            const JwtToken = this.jwtService.sign({ userId: user.userId, userPwd: user.userPwd }, { expiresIn: "1h", secret: "myAccessKey" });
-            return JwtToken;
-        }
-        else
-            return "fail";
+    async setAccessToken({ user }) {
+        const AccessToken = this.jwtService.sign({ userId: user.userId, userPwd: user.userPwd }, { expiresIn: "30m", secret: "myAccessKey" });
+        return AccessToken;
+    }
+    async setRefreshToken({ user }) {
+        const refreshToken = this.jwtService.sign({ userId: user.userId, userPwd: user.userPwd }, { expiresIn: "2w", secret: "myRefreshKey" });
+        return refreshToken;
     }
 };
 AuthService = __decorate([

@@ -12,6 +12,5 @@ export class User {
   userId: string;
 
   @Column()
-  @Field(() => String)
   userPwd: string;
 }

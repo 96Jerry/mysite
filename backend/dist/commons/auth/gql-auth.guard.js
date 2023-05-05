@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GqlAuthAccessGuard = void 0;
+exports.GqlAuthRefreshGuard = exports.GqlAuthAccessGuard = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
 const passport_1 = require("@nestjs/passport");
@@ -20,4 +20,11 @@ GqlAuthAccessGuard = __decorate([
     (0, common_1.Injectable)()
 ], GqlAuthAccessGuard);
 exports.GqlAuthAccessGuard = GqlAuthAccessGuard;
+class GqlAuthRefreshGuard extends (0, passport_1.AuthGuard)("refresh") {
+    getRequest(context) {
+        const ctx = graphql_1.GqlExecutionContext.create(context);
+        return ctx.getContext().req;
+    }
+}
+exports.GqlAuthRefreshGuard = GqlAuthRefreshGuard;
 //# sourceMappingURL=gql-auth.guard.js.map
