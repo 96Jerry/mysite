@@ -1,8 +1,13 @@
 // 쿠키 변수에 담기
-const accessTokenCookie = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("accessToken="))
-  .split("=")[1];
+let accessTokenCookie;
+try {
+  accessTokenCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    .split("=")[1];
+} catch (e) {
+  console.log(e);
+}
 
 // id 값을 주소창에서 받아온다.
 const urlparams = new URLSearchParams(window.location.search);

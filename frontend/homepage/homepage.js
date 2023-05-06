@@ -45,10 +45,15 @@ function initTimer() {
 initTimer();
 
 // 쿠키 변수에 담기
-const accessTokenCookie = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("accessToken="))
-  .split("=")[1];
+let accessTokenCookie;
+try {
+  accessTokenCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="))
+    .split("=")[1];
+} catch (e) {
+  console.log(e);
+}
 
 // graphql에 요청보낼 header 데이터 변수에 담기
 const config = {
@@ -182,3 +187,13 @@ document
         initTimer();
       });
   });
+
+const deleteCookie = (name) => {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
+  deleteCookie("timerEndTime");
+});
