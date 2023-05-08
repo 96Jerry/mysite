@@ -16,7 +16,11 @@ document.getElementById("login-btn").addEventListener("click", () => {
     )
   }`;
   axios
-    .post("http://localhost:3000/graphql", { query }, { withCredentials: true })
+    .post(
+      "http://192.168.219.101:3000/graphql",
+      { query },
+      { withCredentials: true }
+    )
     .then((res) => {
       try {
         if (res.data.data.login === "fail") {

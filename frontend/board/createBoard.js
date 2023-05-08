@@ -28,15 +28,17 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
       { "Authorization": accessTokenCookie},
   };
 
-  axios.post("http://localhost:3000/graphql", { query }, config).then((res) => {
-    // console.log(res.data.data.createBoard.id);
-    console.log(res);
-    try {
-      const data = res.data.data.createBoard;
-      alert("생성완료");
-      window.location.href = "/mysite/frontend/homepage/homepage.html";
-    } catch (e) {
-      alert("로그인 필요");
-    }
-  });
+  axios
+    .post("http://192.168.219.101:3000/graphql", { query }, config)
+    .then((res) => {
+      // console.log(res.data.data.createBoard.id);
+      console.log(res);
+      try {
+        const data = res.data.data.createBoard;
+        alert("생성완료");
+        window.location.href = "/mysite/frontend/homepage/homepage.html";
+      } catch (e) {
+        alert("로그인 필요");
+      }
+    });
 });

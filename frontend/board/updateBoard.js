@@ -5,7 +5,7 @@ const fetchBoardQuery = `query {
       fetchBoard(id :"${id}")
       { number, title, content } } `;
 axios
-  .post("http://localhost:3000/graphql", { query: fetchBoardQuery })
+  .post("http://192.168.219.101:3000/graphql", { query: fetchBoardQuery })
   .then((res) => {
     const data = res.data.data.fetchBoard;
     // console.log(data);
@@ -34,7 +34,7 @@ document.getElementById("update-board-btn").addEventListener("click", () => {
           }
         }
         `;
-  axios.post("http://localhost:3000/graphql", { query }).then((res) => {
+  axios.post("http://192.168.219.101:3000/graphql", { query }).then((res) => {
     // console.log(res.data.data.createBoard.id);
     alert("수정완료");
     window.location.href = "/mysite/frontend/homepage/homepage.html";

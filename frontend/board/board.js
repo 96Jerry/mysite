@@ -26,7 +26,7 @@ const query = `query {
 `;
 
 axios
-  .post("http://localhost:3000/graphql", {
+  .post("http://192.168.219.101:3000/graphql", {
     query,
   })
   .then((res) => {
@@ -51,7 +51,7 @@ document.getElementById("update-btn").addEventListener("click", async () => {
   }`;
   await axios
     .post(
-      "http://localhost:3000/graphql",
+      "http://192.168.219.101:3000/graphql",
       { query },
       //prettier-ignore
       {headers: {"Authorization": accessTokenCookie}}
@@ -78,7 +78,7 @@ document.getElementById("delete-btn").addEventListener("click", async () => {
 }`;
   await axios
     .post(
-      "http://localhost:3000/graphql",
+      "http://192.168.219.101:3000/graphql",
       { query },
       //prettier-ignore
       {headers: {"Authorization": accessTokenCookie}}
@@ -91,12 +91,14 @@ document.getElementById("delete-btn").addEventListener("click", async () => {
       deleteBoard(id : "${id}")
     }
   `;
-        axios.post("http://localhost:3000/graphql", { query }).then((res) => {
-          const data = res.data.data.deleteBoard;
-          alert(data);
-          window.location.href =
-            "http://localhost:5501/frontend/homepage/homepage.html";
-        });
+        axios
+          .post("http://192.168.219.101:3000/graphql", { query })
+          .then((res) => {
+            const data = res.data.data.deleteBoard;
+            alert(data);
+            window.location.href =
+              "http://localhost:5501/frontend/homepage/homepage.html";
+          });
       } else {
         alert("작성자가 아닙니다");
       }
