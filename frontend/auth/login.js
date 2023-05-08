@@ -17,7 +17,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
   }`;
   axios
     .post(
-      "http://192.168.219.101:3000/graphql",
+      "https://192.168.219.101:3000/graphql",
       { query },
       { withCredentials: true }
     )

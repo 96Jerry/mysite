@@ -70,7 +70,7 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
   }`;
 
   axios
-    .post("http://192.168.219.101:3000/graphql", { query }, config)
+    .post("https://192.168.219.101:3000/graphql", { query }, config)
     .then((res) => {
       try {
         const isLoggedin = res.data.data.isLoggedin;
@@ -92,7 +92,7 @@ const getUserInfo = async () => {
 
   try {
     const res = await axios.post(
-      "http://192.168.219.101:3000/graphql",
+      "https://192.168.219.101:3000/graphql",
       { query },
       config
     );
@@ -115,7 +115,7 @@ const fetchBoardsQuery = `query {
       fetchBoards
       { id } } `;
 axios
-  .post("http://192.168.219.101:3000/graphql", { query: fetchBoardsQuery })
+  .post("https://192.168.219.101:3000/graphql", { query: fetchBoardsQuery })
   .then(async (res) => {
     const fetchBoardsData = res.data.data.fetchBoards;
     //     console.log(data[0].id);
@@ -127,7 +127,9 @@ axios
       fetchBoard(id : "${id}")
       { id, number, title, content, user{userId} } } `;
       await axios
-        .post("http://192.168.219.101:3000/graphql", { query: fetchBoardQuery })
+        .post("https://192.168.219.101:3000/graphql", {
+          query: fetchBoardQuery,
+        })
         .then(async (res) => {
           const fetchBoardData = res.data.data.fetchBoard;
           // console.log(fetchBoardData.user.userId);
@@ -176,7 +178,7 @@ document
 }`;
     await axios
       .post(
-        "http://192.168.219.101:3000/graphql",
+        "https://192.168.219.101:3000/graphql",
         { query: query2 },
         { withCredentials: true }
       )

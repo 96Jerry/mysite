@@ -29,7 +29,7 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
   };
 
   axios
-    .post("http://192.168.219.101:3000/graphql", { query }, config)
+    .post("https://192.168.219.101:3000/graphql", { query }, config)
     .then((res) => {
       // console.log(res.data.data.createBoard.id);
       console.log(res);
