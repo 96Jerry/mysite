@@ -73,8 +73,7 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
     try {
       const isLoggedin = res.data.data.isLoggedin;
       if (isLoggedin)
-        window.location.href =
-          "http://localhost:5501/frontend/board/createBoard.html";
+        window.location.href = "/mysite/frontend/board/createBoard.html";
     } catch (e) {
       alert("로그인이 필요합니다");
     }
@@ -137,7 +136,7 @@ axios
           // 3. boardlist에 a태그를 추가한다.
           let boardList = document.querySelector(".board-list");
           const a = document.createElement("a");
-          a.href = `http://localhost:5501/frontend/board/board.html?id=${id}`;
+          a.href = `/mysite/frontend/board/board.html?id=${id}`;
           a.innerHTML = `${title}`;
           const div = document.createElement("div");
           div.appendChild(a);

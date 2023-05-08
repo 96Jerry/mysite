@@ -37,7 +37,6 @@ document.getElementById("update-board-btn").addEventListener("click", () => {
   axios.post("http://localhost:3000/graphql", { query }).then((res) => {
     // console.log(res.data.data.createBoard.id);
     alert("수정완료");
-    window.location.href =
-      "http://localhost:5501/frontend/homepage/homepage.html";
+    window.location.href = "/mysite/frontend/homepage/homepage.html";
   });
 });

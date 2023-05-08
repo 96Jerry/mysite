@@ -60,7 +60,7 @@ document.getElementById("update-btn").addEventListener("click", async () => {
       const loginUser = res.data.data.fetchLoginUser;
       // console.log(loginUser, writer);
       if (loginUser === writer) {
-        window.location.href = `http://localhost:5501/frontend/board/updateBoard.html?id=${id}`;
+        window.location.href = `/mysite/frontend/board/updateBoard.html?id=${id}`;
       } else {
         alert("작성자가 아닙니다");
       }
