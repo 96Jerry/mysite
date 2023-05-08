@@ -27,6 +27,7 @@ export class UserResolver {
     @Args("createUserInput") createUserInput: createUserInput //
   ) {
     return this.userService.create({ createUserInput });
+    
   }
 
   @Mutation(() => String)
