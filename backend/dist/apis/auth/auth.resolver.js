@@ -41,8 +41,8 @@ let AuthResolver = class AuthResolver {
             return "fail";
         }
         context.res.setHeader("set-cookie", [
-            `accessToken=Bearer ${accessToken}; path=/;`,
-            `refreshToken=${refreshToken}; path=/;`,
+            `accessToken=Bearer ${accessToken}; path=/; httponly;`,
+            `refreshToken=${refreshToken}; path=/; httponly;`,
         ]);
         return "success";
     }

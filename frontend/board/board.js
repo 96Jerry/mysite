@@ -60,7 +60,7 @@ document.getElementById("update-btn").addEventListener("click", async () => {
       const loginUser = res.data.data.fetchLoginUser;
       // console.log(loginUser, writer);
       if (loginUser === writer) {
-        window.location.href = `/mysite/frontend/board/updateBoard.html?id=${id}`;
+        window.location.href = `/frontend/board/updateBoard.html?id=${id}`;
       } else {
         alert("작성자가 아닙니다");
       }
@@ -94,7 +94,7 @@ document.getElementById("delete-btn").addEventListener("click", async () => {
         axios.post("http://localhost:3000/graphql", { query }).then((res) => {
           const data = res.data.data.deleteBoard;
           alert(data);
-          window.location.href = "/mysite/frontend/homepage/homepage.html";
+          window.location.href = "/frontend/homepage/homepage.html";
         });
       } else {
         alert("작성자가 아닙니다");

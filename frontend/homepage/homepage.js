@@ -69,17 +69,14 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
     isLoggedin
   }`;
 
-  axios
-    .post("https://192.168.219.101:3000/graphql", { query }, config)
-    .then((res) => {
-      try {
-        const isLoggedin = res.data.data.isLoggedin;
-        if (isLoggedin)
-          window.location.href = "/mysite/frontend/board/createBoard.html";
-      } catch (e) {
-        alert("로그인이 필요합니다");
-      }
-    });
+  axios.post("http://localhost:3000/graphql", { query }, config).then((res) => {
+    try {
+      const isLoggedin = res.data.data.isLoggedin;
+      if (isLoggedin) window.location.href = "/frontend/board/createBoard.html";
+    } catch (e) {
+      alert("로그인이 필요합니다");
+    }
+  });
 });
 
 // 현재 로그인된 유저 아이디 가져오기
@@ -92,7 +89,7 @@ const getUserInfo = async () => {
 
   try {
     const res = await axios.post(
-      "https://192.168.219.101:3000/graphql",
+      "http://localhost:3000/graphql",
       { query },
       config
     );
@@ -115,7 +112,7 @@ const fetchBoardsQuery = `query {
       fetchBoards
       { id } } `;
 axios
-  .post("https://192.168.219.101:3000/graphql", { query: fetchBoardsQuery })
+  .post("http://localhost:3000/graphql", { query: fetchBoardsQuery })
   .then(async (res) => {
     const fetchBoardsData = res.data.data.fetchBoards;
     //     console.log(data[0].id);
@@ -127,7 +124,7 @@ axios
       fetchBoard(id : "${id}")
       { id, number, title, content, user{userId} } } `;
       await axios
-        .post("https://192.168.219.101:3000/graphql", {
+        .post("http://localhost:3000/graphql", {
           query: fetchBoardQuery,
         })
         .then(async (res) => {
@@ -140,7 +137,7 @@ axios
           // 3. boardlist에 a태그를 추가한다.
           let boardList = document.querySelector(".board-list");
           const a = document.createElement("a");
-          a.href = `/mysite/frontend/board/board.html?id=${id}`;
+          a.href = `/frontend/board/board.html?id=${id}`;
           a.innerHTML = `${title}`;
           const div = document.createElement("div");
           div.appendChild(a);
@@ -178,7 +175,7 @@ document
 }`;
     await axios
       .post(
-        "https://192.168.219.101:3000/graphql",
+        "http://localhost:3000/graphql",
         { query: query2 },
         { withCredentials: true }
       )

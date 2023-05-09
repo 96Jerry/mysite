@@ -11,6 +11,6 @@ document.getElementById("create-user-btn").addEventListener("click", () => {
   `;
   axios.post("http://localhost:3000/graphql", { query }).then((res) => {
     alert(res.data.data.createUser);
-    window.location.href = "/mysite/frontend/homepage/homepage.html";
+    window.location.href = "/frontend/homepage/homepage.html";
   });
 });

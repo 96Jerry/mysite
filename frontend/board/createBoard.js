@@ -34,7 +34,7 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
     try {
       const data = res.data.data.createBoard;
       alert("생성완료");
-      window.location.href = "/mysite/frontend/homepage/homepage.html";
+      window.location.href = "/frontend/homepage/homepage.html";
     } catch (e) {
       alert("로그인 필요");
     }

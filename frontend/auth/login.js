@@ -22,9 +22,10 @@ document.getElementById("login-btn").addEventListener("click", () => {
         if (res.data.data.login === "fail") {
           alert("비밀번호가 다릅니다.");
         } else {
-          alert("로그인 성공");
+          // alert("로그인 성공");
+          // console.log(res.data.data.login);
           setTimerCookie(30);
-          window.location.href = "/mysite/frontend/homepage/homepage.html";
+          // window.location.href = "/frontend/homepage/homepage.html";
         }
       } catch (e) {
         alert("아이디가 없습니다");
