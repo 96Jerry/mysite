@@ -37,6 +37,7 @@ __decorate([
 ], Board.prototype, "content", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ nullable: false }),
+    (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)
 ], Board.prototype, "createdAt", void 0);
 __decorate([

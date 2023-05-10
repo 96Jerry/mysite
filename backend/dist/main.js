@@ -5,7 +5,7 @@ const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: "http://127.0.0.1:5501",
+        origin: "http://localhost:5501",
         credentials: true,
     });
     await app.listen(3000);

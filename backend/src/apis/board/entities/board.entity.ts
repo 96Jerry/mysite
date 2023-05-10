@@ -29,6 +29,7 @@ export class Board {
   content: string;
 
   @CreateDateColumn({ nullable: false })
+  @Field(() => Date)
   createdAt: Date;
 
   @ManyToOne(() => User)

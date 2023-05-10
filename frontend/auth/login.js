@@ -1,4 +1,4 @@
-// 타이머 쿠키를 설정하는 함수
+// 타이머 쿠키 설정 함수 (x) => {x분 이후에 만료되는 쿠키 설정}
 function setTimerCookie(minutes) {
   const now = new Date();
   const expires = new Date(now.getTime() + minutes * 60 * 1000);
@@ -22,8 +22,8 @@ document.getElementById("login-btn").addEventListener("click", () => {
         if (res.data.data.login === "fail") {
           alert("비밀번호가 다릅니다.");
         } else {
-          // alert("로그인 성공");
-          // console.log(res.data.data.login);
+          alert("로그인 성공");
+          console.log(res.data.data.login);
           setTimerCookie(30);
           // window.location.href = "/frontend/homepage/homepage.html";
         }

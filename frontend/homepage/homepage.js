@@ -1,7 +1,19 @@
-// h6 tag에 로그인 남은 시간 설정
 let timerId;
 const timerElement = document.getElementById("timer");
 
+// 쿠키에서 값 뽑는 함수
+function getValueFromCookie(x) {
+  const cookies = document.cookie;
+
+  const cookieValue = cookies
+    .split("; ")
+    .find((row) => row.startsWith(x))
+    ?.split("=")[1];
+
+  return cookieValue;
+}
+
+// (endtime) => {남은시간 업데이트} 함수
 function updateTimeRemaining(endTime) {
   const currentTime = new Date().getTime();
   const timeRemaining = Math.max(endTime - currentTime, 0);
@@ -19,16 +31,9 @@ function updateTimeRemaining(endTime) {
   }
 }
 
-function getTimerEndTimeFromCookie() {
-  const cookieValue = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("timerEndTime="))
-    ?.split("=")[1];
-  return cookieValue ? new Date(cookieValue) : null;
-}
-
+// 타이머 초기화 함수
 function initTimer() {
-  const endTime = getTimerEndTimeFromCookie();
+  const endTime = new Date(getValueFromCookie("timerEndTime"));
   if (endTime) {
     const currentTime = new Date();
     if (currentTime < endTime) {
@@ -44,18 +49,10 @@ function initTimer() {
 // 페이지 로드 시 타이머 초기화
 initTimer();
 
-// 쿠키 변수에 담기
-let accessTokenCookie;
-try {
-  accessTokenCookie = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("accessToken="))
-    .split("=")[1];
-} catch (e) {
-  console.log(e);
-}
+let accessTokenCookie = getValueFromCookie("accessToken");
 
 // graphql에 요청보낼 header 데이터 변수에 담기
+
 const config = {
   headers: {
     //prettier-ignore
@@ -107,6 +104,25 @@ getUserInfo().then((res) => {
   userInfoDiv.textContent = `회원정보: ${res}`;
 });
 
+// div 태그를 x 아이디에 y 내용으로 추가하는 함수
+function addDivTag(x, y) {
+  let boardId = document.querySelector(x);
+  const boardTag = document.createElement("div");
+  boardTag.innerHTML = y;
+  boardId.appendChild(boardTag);
+}
+
+// a 태그를 x 아이디에 y주소, z내용으로 추가하는 함수
+function addATag(x, y, z) {
+  let boardList = document.querySelector(x);
+  const a = document.createElement("a");
+  a.href = y;
+  a.innerHTML = z;
+  const div = document.createElement("div");
+  div.appendChild(a);
+  boardList.appendChild(div);
+}
+
 // fetchBoards, 모든 id값을 가져오고
 const fetchBoardsQuery = `query {
       fetchBoards
@@ -122,46 +138,29 @@ axios
       const fetchBoardQuery = `
       query {
       fetchBoard(id : "${id}")
-      { id, number, title, content, user{userId} } } `;
+      { id, number, title, content, user{userId}, createdAt } } `;
       await axios
         .post("http://localhost:3000/graphql", {
           query: fetchBoardQuery,
         })
         .then(async (res) => {
           const fetchBoardData = res.data.data.fetchBoard;
-          // console.log(fetchBoardData.user.userId);
           const writer = fetchBoardData.user.userId;
           const number = fetchBoardData.number;
           const title = fetchBoardData.title;
-          const content = fetchBoardData.content;
+          const date = fetchBoardData.createdAt;
+
           // 3. boardlist에 a태그를 추가한다.
-          let boardList = document.querySelector(".board-list");
-          const a = document.createElement("a");
-          a.href = `/frontend/board/board.html?id=${id}`;
-          a.innerHTML = `${title}`;
-          const div = document.createElement("div");
-          div.appendChild(a);
-          boardList.appendChild(div);
+          // prettier-ignore
+          addATag(".board-list", `/frontend/board/board.html?id=${id}`, `${title}`)
           // 4. board number 추가.
-          let boardNumber = document.querySelector(".board-number");
-          const boardNumberDiv = document.createElement("div");
-          boardNumberDiv.innerHTML = "번호";
-          boardNumber.appendChild(boardNumberDiv);
+          addDivTag(".board-number", number);
           // 5. board writer 추가
-          let boardWriter = document.querySelector(".board-writer");
-          const boardWriterDiv = document.createElement("div");
-          boardWriterDiv.innerHTML = writer;
-          boardWriter.appendChild(boardWriterDiv);
+          addDivTag(".board-writer", writer);
           // 6. board date 추가
-          let boardDate = document.querySelector(".board-date");
-          const boardDateDiv = document.createElement("div");
-          boardDateDiv.innerHTML = "작성일";
-          boardDate.appendChild(boardDateDiv);
+          addDivTag(".board-date", "날짜");
           // 7. board clcik 추가
-          let boardClick = document.querySelector(".board-click");
-          const boardClickDiv = document.createElement("div");
-          boardClickDiv.innerHTML = "조회";
-          boardClick.appendChild(boardClickDiv);
+          addDivTag(".board-click", "조회");
         });
     }
   });

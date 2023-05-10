@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
@@ -9,18 +9,34 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, "refresh") {
       jwtFromRequest: (req: any) => {
         // console.log(req.headers);
         const cookie = req.headers.cookie;
-        const keyValuePairs = cookie.split("; ");
-        let refreshToken: string;
+        try {
+          const keyValuePairs = cookie.split("; ");
+          let refreshToken: string;
 
-        for (const keyValue of keyValuePairs) {
-          const [key, value] = keyValue.split("=");
-          if (key === "refreshToken") {
-            refreshToken = value;
-            break;
+          for (const keyValue of keyValuePairs) {
+            const [key, value] = keyValue.split("=");
+            if (key === "refreshToken") {
+              refreshToken = value;
+              break;
+            }
           }
+          // console.log(refreshToken);
+          return refreshToken;
+        } catch (e) {
+          throw HttpException;
         }
-        // console.log(refreshToken);
-        return refreshToken;
+        // const keyValuePairs = cookie.split("; ");
+        // let refreshToken: string;
+
+        // for (const keyValue of keyValuePairs) {
+        //   const [key, value] = keyValue.split("=");
+        //   if (key === "refreshToken") {
+        //     refreshToken = value;
+        //     break;
+        //   }
+        // }
+        // // console.log(refreshToken);
+        // return refreshToken;
       },
       secretOrKey: "myRefreshKey",
     });
