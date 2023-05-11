@@ -196,3 +196,5 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   deleteCookie("refreshToken");
   deleteCookie("timerEndTime");
 });
+
+// 11
