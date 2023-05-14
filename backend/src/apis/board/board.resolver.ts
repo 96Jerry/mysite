@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { BoardService } from "./board.service";
 import { Board } from "./entities/board.entity";
-import { CreateBoardInput } from "./dto/createboard.input";
+import { CreateBoardInput } from "./dto/createBoard.input";
 import { UseGuards } from "@nestjs/common";
 import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
 import { CurrentUser } from "src/commons/auth/gql-user.param";

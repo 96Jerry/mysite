@@ -16,11 +16,11 @@ dotenv.config();
     BoardModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "127.0.0.1",
+      host: "my-database",
       port: 3306,
       username: "root",
       password: process.env.MYSQL_PASSWORD,
-      database: "mysite",
+      database: "mydocker",
       entities: [__dirname + "/apis/**/*.entity.*"],
       synchronize: true,
     }),
