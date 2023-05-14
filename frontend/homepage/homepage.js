@@ -1,7 +1,13 @@
-let timerId;
-const timerElement = document.getElementById("timer");
+// 타이머 쿠키 설정 함수 (x) => {x분 이후에 만료되는 쿠키 설정}
+function setTimerCookie(minutes) {
+  const now = new Date();
+  const expires = new Date(now.getTime() + minutes * 60 * 1000);
+  document.cookie = `timerEndTime=${expires.toUTCString()}; expires=${expires.toUTCString()}; path=/`;
+}
 
 // 쿠키에서 값 뽑는 함수
+let timerId;
+const timerElement = document.getElementById("timer");
 function getValueFromCookie(x) {
   const cookies = document.cookie;
 
@@ -46,26 +52,40 @@ function initTimer() {
   }
 }
 
-// 페이지 로드 시 타이머 초기화
-initTimer();
+// 현재 로그인된 유저 아이디 가져오기 함수
+const getUserInfo = async () => {
+  const query = `
+          query {
+            fetchLoginUser
+          }
+        `;
+  try {
+    const res = await axios.post(
+      "http://localhost:3000/graphql",
+      { query },
+      config
+    );
+    loggedInUserId = res.data.data.fetchLoginUser;
+    setTimerCookie(30);
+    initTimer();
+    return loggedInUserId;
+  } catch (error) {
+    return "로그인이 필요합니다.";
+  }
+};
 
+// 게시글 생성 버튼을 눌렀을 때
 let accessTokenCookie = getValueFromCookie("accessToken");
-
-// graphql에 요청보낼 header 데이터 변수에 담기
-
 const config = {
   headers: {
     //prettier-ignore
     "Authorization": `${accessTokenCookie}`,
   },
 };
-
-// 게시글 생성 버튼을 눌렀을 때
 document.getElementById("create-board-btn").addEventListener("click", () => {
   const query = `query{
     isLoggedin
   }`;
-
   axios.post("http://localhost:3000/graphql", { query }, config).then((res) => {
     try {
       const isLoggedin = res.data.data.isLoggedin;
@@ -76,32 +96,12 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
   });
 });
 
-// 현재 로그인된 유저 아이디 가져오기
-const getUserInfo = async () => {
-  const query = `
-          query {
-            fetchLoginUser
-          }
-        `;
-
-  try {
-    const res = await axios.post(
-      "http://localhost:3000/graphql",
-      { query },
-      config
-    );
-
-    loggedInUserId = res.data.data.fetchLoginUser;
-    return loggedInUserId;
-  } catch (error) {
-    return "로그인이 필요합니다.";
-  }
-};
-
+// 현재 로그인된 유저 화면에 표시
 const userInfoDiv = document.querySelector("div");
 getUserInfo().then((res) => {
   // console.log(res);
   userInfoDiv.textContent = `회원정보: ${res}`;
+  // location.reload();
 });
 
 // div 태그를 x 아이디에 y 내용으로 추가하는 함수
@@ -165,6 +165,7 @@ axios
     }
   });
 
+// 로그인 연장 버튼을 눌렀을 때
 document
   .getElementById("extend-login-btn")
   .addEventListener("click", async () => {
@@ -187,6 +188,7 @@ document
       });
   });
 
+// 로그아웃 버튼을 눌렀을 때
 const deleteCookie = (name) => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
@@ -195,6 +197,5 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   deleteCookie("accessToken");
   deleteCookie("refreshToken");
   deleteCookie("timerEndTime");
+  location.reload();
 });
-
-// 11

@@ -14,14 +14,24 @@ export class NaverStrategy extends PassportStrategy(Strategy, "naver") {
     });
   }
 
-  async validate(accessToken, refreshToken, profile: any, done) {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: any,
+    done: any
+  ) {
     // console.log(profile);
     const randomPassword = crypto.randomBytes(16).toString("hex");
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(randomPassword, saltRounds);
 
-    const user = { id: profile._json.email.split("@")[0], pwd: hashedPassword };
-    // console.log(user);
+    const user = {
+      userId: profile._json.email.split("@")[0],
+      userPwd: hashedPassword,
+      // accessToken,
+      // refreshToken,
+    };
+    // console.log(user.accessToken);
     return done(null, user);
   }
 }

@@ -42,15 +42,18 @@ export class AuthService {
 
   async loginSocial({ req, res }) {
     // 1. db에 유저 정보가 있는지 확인
-    const user = await this.userRepository.findOneBy({ userId: req.user.id });
+    const user = await this.userRepository.findOneBy({
+      userId: req.user.userId,
+    });
 
     // 2. 있으면 상관없고 없다면 아이디를 db에 저장해준다.
     if (!user) {
       await this.userRepository.save({
-        userId: req.user.id,
-        userPwd: req.user.pwd,
+        userId: req.user.userId,
+        userPwd: req.user.userPwd,
       });
     }
-    res.redirect("http://localhost:5501/frontend/homepage/homepage.html");
+    // res.cookie("accessToken", `Bearer ${req.user.accessToken}`, {});
+    // res.cookie("refershToken", `${req.user.refreshToken}`, {});
   }
 }

@@ -32,14 +32,15 @@ let AuthService = class AuthService {
         return refreshToken;
     }
     async loginSocial({ req, res }) {
-        const user = await this.userRepository.findOneBy({ userId: req.user.id });
+        const user = await this.userRepository.findOneBy({
+            userId: req.user.userId,
+        });
         if (!user) {
             await this.userRepository.save({
-                userId: req.user.id,
-                userPwd: req.user.pwd,
+                userId: req.user.userId,
+                userPwd: req.user.userPwd,
             });
         }
-        res.redirect("http://localhost:5501/frontend/homepage/homepage.html");
     }
 };
 AuthService = __decorate([
