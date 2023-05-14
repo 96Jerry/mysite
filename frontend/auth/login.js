@@ -25,7 +25,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
           alert("로그인 성공");
           console.log(res.data.data.login);
           setTimerCookie(30);
-          // window.location.href = "/frontend/homepage/homepage.html";
+          window.location.href = "/frontend/homepage/homepage.html";
         }
       } catch (e) {
         alert("아이디가 없습니다");
