@@ -27,8 +27,18 @@ let UserResolver = class UserResolver {
         const user = await this.userService.findOne({ user: currentUser });
         return user.userId;
     }
-    createUser(createUserInput) {
-        return this.userService.create({ createUserInput });
+    async createUser(createUserInput) {
+        const userId = await this.userService.findOne({ user: createUserInput });
+        if (userId) {
+            return "아이디 중복";
+        }
+        else {
+            const result = await this.userService.create({ createUserInput });
+            if (result)
+                return "success";
+            else
+                return "fail";
+        }
     }
     deleteUser(userId) {
         return this.userService.delete({ userId });
@@ -47,7 +57,7 @@ __decorate([
     __param(0, (0, graphql_1.Args)("createUserInput")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [createUser_input_1.createUserInput]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "createUser", null);
 __decorate([
     (0, graphql_1.Mutation)(() => String),

@@ -23,11 +23,20 @@ export class UserResolver {
 
   // 회원가입 api
   @Mutation(() => String)
-  createUser(
+  async createUser(
     @Args("createUserInput") createUserInput: createUserInput //
   ) {
-    return this.userService.create({ createUserInput });
-    
+    // 1. 아이디를 조회해서 있으면 안된다고 한다.
+    const userId = await this.userService.findOne({ user: createUserInput });
+    if (userId) {
+      return "아이디 중복";
+    }
+    // 2. 아이디가 없다면 만들어준다.
+    else {
+      const result = await this.userService.create({ createUserInput });
+      if (result) return "success";
+      else return "fail";
+    }
   }
 
   @Mutation(() => String)

@@ -5,7 +5,7 @@ export declare class UserService {
     constructor(userRepository: Repository<User>);
     create({ createUserInput }: {
         createUserInput: any;
-    }): Promise<"success" | "fail">;
+    }): Promise<any>;
     delete({ userId }: {
         userId: any;
     }): void;

@@ -7,6 +7,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
 import { UserService } from "../user/user.service";
 import { JwtRefreshStrategy } from "src/commons/auth/jwt-refresh.strategy";
+import { AuthController } from "./auth.controller";
+import { NaverStrategy } from "src/commons/auth/naver.strategy";
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { JwtRefreshStrategy } from "src/commons/auth/jwt-refresh.strategy";
     AuthService,
     UserService,
     JwtRefreshStrategy,
+    NaverStrategy,
   ],
+  controllers: [AuthController],
 })
 export class AuthModule {}

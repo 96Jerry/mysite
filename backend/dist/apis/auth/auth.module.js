@@ -15,6 +15,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../user/entities/user.entity");
 const user_service_1 = require("../user/user.service");
 const jwt_refresh_strategy_1 = require("../../commons/auth/jwt-refresh.strategy");
+const auth_controller_1 = require("./auth.controller");
+const naver_strategy_1 = require("../../commons/auth/naver.strategy");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -28,7 +30,9 @@ AuthModule = __decorate([
             auth_service_1.AuthService,
             user_service_1.UserService,
             jwt_refresh_strategy_1.JwtRefreshStrategy,
+            naver_strategy_1.NaverStrategy,
         ],
+        controllers: [auth_controller_1.AuthController],
     })
 ], AuthModule);
 exports.AuthModule = AuthModule;

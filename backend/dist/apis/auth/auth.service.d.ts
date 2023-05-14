@@ -11,4 +11,8 @@ export declare class AuthService {
     setRefreshToken({ user }: {
         user: any;
     }): Promise<string>;
+    loginSocial({ req, res }: {
+        req: any;
+        res: any;
+    }): Promise<void>;
 }

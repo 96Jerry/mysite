@@ -31,6 +31,16 @@ let AuthService = class AuthService {
         const refreshToken = this.jwtService.sign({ userId: user.userId, userPwd: user.userPwd }, { expiresIn: "2w", secret: "myRefreshKey" });
         return refreshToken;
     }
+    async loginSocial({ req, res }) {
+        const user = await this.userRepository.findOneBy({ userId: req.user.id });
+        if (!user) {
+            await this.userRepository.save({
+                userId: req.user.id,
+                userPwd: req.user.pwd,
+            });
+        }
+        res.redirect("http://localhost:5501/frontend/homepage/homepage.html");
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),

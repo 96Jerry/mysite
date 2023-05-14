@@ -3,7 +3,6 @@ import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
 import { Repository } from "typeorm";
-import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class AuthService {
@@ -39,5 +38,19 @@ export class AuthService {
       { expiresIn: "2w", secret: "myRefreshKey" }
     );
     return refreshToken;
+  }
+
+  async loginSocial({ req, res }) {
+    // 1. db에 유저 정보가 있는지 확인
+    const user = await this.userRepository.findOneBy({ userId: req.user.id });
+
+    // 2. 있으면 상관없고 없다면 아이디를 db에 저장해준다.
+    if (!user) {
+      await this.userRepository.save({
+        userId: req.user.id,
+        userPwd: req.user.pwd,
+      });
+    }
+    res.redirect("http://localhost:5501/frontend/homepage/homepage.html");
   }
 }

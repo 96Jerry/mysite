@@ -14,9 +14,7 @@ export class UserService {
     const hasedUserPwd = await bcrypt.hash(createUserInput.userPwd, 10);
     createUserInput.userPwd = hasedUserPwd;
 
-    return (await this.userRepository.save(createUserInput))
-      ? "success"
-      : "fail";
+    return await this.userRepository.save(createUserInput);
   }
   delete({ userId }) {}
 
