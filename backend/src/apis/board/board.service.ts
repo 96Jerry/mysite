@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { Board } from "./entities/board.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
@@ -34,6 +34,13 @@ export class BoardService {
       where: { id: id },
       order: { createdAt: "ASC" },
       relations: ["user"], // 이메일 설정 오류로 인한 커밋2
+    });
+  }
+
+  async searchTitle({ title }) {
+    return await this.boardRepository.find({
+      where: { title: Like(`%${title}%`) },
+      relations: ["user"],
     });
   }
 

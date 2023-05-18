@@ -42,6 +42,12 @@ let BoardService = class BoardService {
             relations: ["user"],
         });
     }
+    async searchTitle({ title }) {
+        return await this.boardRepository.find({
+            where: { title: (0, typeorm_1.Like)(`%${title}%`) },
+            relations: ["user"],
+        });
+    }
     async update({ id, board }) {
         return await this.boardRepository.save(Object.assign({ id }, board));
     }

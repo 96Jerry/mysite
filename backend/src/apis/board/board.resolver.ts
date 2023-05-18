@@ -33,6 +33,11 @@ export class BoardResolver {
     return this.boardService.create({ board, currentUser });
   }
 
+  @Query(() => [Board])
+  searchBoard(@Args("searchInput") searchInput: string) {
+    return this.boardService.searchTitle({ title: searchInput });
+  }
+
   @Mutation(() => Board)
   updateBoard(
     @Args("id") id: string,

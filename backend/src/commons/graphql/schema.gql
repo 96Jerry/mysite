@@ -25,6 +25,7 @@ type Query {
   fetchLoginUser: String!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
+  searchBoard(searchInput: String!): [Board!]!
 }
 
 type Mutation {

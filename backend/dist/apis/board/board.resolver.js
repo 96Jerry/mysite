@@ -16,7 +16,7 @@ exports.BoardResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const board_service_1 = require("./board.service");
 const board_entity_1 = require("./entities/board.entity");
-const createboard_input_1 = require("./dto/createboard.input");
+const createBoard_input_1 = require("./dto/createBoard.input");
 const common_1 = require("@nestjs/common");
 const gql_auth_guard_1 = require("../../commons/auth/gql-auth.guard");
 const gql_user_param_1 = require("../../commons/auth/gql-user.param");
@@ -32,6 +32,9 @@ let BoardResolver = class BoardResolver {
     }
     createBoard(board, currentUser) {
         return this.boardService.create({ board, currentUser });
+    }
+    searchBoard(searchInput) {
+        return this.boardService.searchTitle({ title: searchInput });
     }
     updateBoard(id, board) {
         return this.boardService.update({ id, board });
@@ -59,15 +62,22 @@ __decorate([
     __param(0, (0, graphql_1.Args)("board")),
     __param(1, (0, gql_user_param_1.CurrentUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createboard_input_1.CreateBoardInput, Object]),
+    __metadata("design:paramtypes", [createBoard_input_1.CreateBoardInput, Object]),
     __metadata("design:returntype", void 0)
 ], BoardResolver.prototype, "createBoard", null);
+__decorate([
+    (0, graphql_1.Query)(() => [board_entity_1.Board]),
+    __param(0, (0, graphql_1.Args)("searchInput")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], BoardResolver.prototype, "searchBoard", null);
 __decorate([
     (0, graphql_1.Mutation)(() => board_entity_1.Board),
     __param(0, (0, graphql_1.Args)("id")),
     __param(1, (0, graphql_1.Args)("board")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, createboard_input_1.CreateBoardInput]),
+    __metadata("design:paramtypes", [String, createBoard_input_1.CreateBoardInput]),
     __metadata("design:returntype", void 0)
 ], BoardResolver.prototype, "updateBoard", null);
 __decorate([

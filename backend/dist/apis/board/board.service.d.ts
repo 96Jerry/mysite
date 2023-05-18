@@ -13,6 +13,9 @@ export declare class BoardService {
     find({ id }: {
         id: any;
     }): Promise<Board>;
+    searchTitle({ title }: {
+        title: any;
+    }): Promise<Board[]>;
     update({ id, board }: {
         id: any;
         board: any;

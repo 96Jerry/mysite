@@ -97,7 +97,7 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
 });
 
 // 현재 로그인된 유저 화면에 표시
-const userInfoDiv = document.querySelector("div");
+const userInfoDiv = document.getElementById("user-info");
 getUserInfo().then((res) => {
   // console.log(res);
   userInfoDiv.textContent = `회원정보: ${res}`;
@@ -158,9 +158,10 @@ axios
           // 5. board writer 추가
           addDivTag(".board-writer", writer);
           // 6. board date 추가
-          addDivTag(".board-date", "날짜");
+          readableDate = date.substring(0, 10);
+          addDivTag(".board-date", readableDate);
           // 7. board clcik 추가
-          addDivTag(".board-click", "조회");
+          addDivTag(".board-click", "조회수");
         });
     }
   });
@@ -198,4 +199,48 @@ document.getElementById("logout-btn").addEventListener("click", () => {
   deleteCookie("refreshToken");
   deleteCookie("timerEndTime");
   location.reload();
+});
+
+// search-btn을 눌렀을 때
+
+document.getElementById("search-btn").addEventListener("click", () => {
+  document.querySelector(".board-list").innerHTML = "";
+  document.querySelector(".board-number").innerHTML = "";
+  document.querySelector(".board-writer").innerHTML = "";
+  document.querySelector(".board-date").innerHTML = "";
+  document.querySelector(".board-click").innerHTML = "";
+  const searchInput = document.getElementById("search-input").value;
+
+  const searchQuery = `query{
+  searchBoard(searchInput: "${searchInput}"){
+    id,
+    number,
+    title,
+    content,
+    createdAt,
+    user{
+      userId
+    }
+  }
+}`;
+  axios
+    .post("http://localhost:3000/graphql", { query: searchQuery })
+    .then((res) => {
+      const data = res.data.data.searchBoard;
+
+      for (let i = 0; i < data.length; i++) {
+        // 3. boardlist에 a태그를 추가한다.
+        // prettier-ignore
+        addATag(".board-list", `/frontend/board/board.html?id=${data[i].id}`, `${data[i].title}`)
+        // 4. board number 추가.
+        addDivTag(".board-number", data[i].number);
+        // 5. board writer 추가
+        addDivTag(".board-writer", data[i].user.userId);
+        // 6. board date 추가
+        readableDate = data[i].createdAt.substring(0, 10);
+        addDivTag(".board-date", readableDate);
+        // 7. board clcik 추가
+        addDivTag(".board-click", "조회수");
+      }
+    });
 });
