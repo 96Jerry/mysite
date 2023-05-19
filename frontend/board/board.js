@@ -101,3 +101,18 @@ document.getElementById("delete-btn").addEventListener("click", async () => {
       }
     });
 });
+
+const viewsQuery = `mutation{
+  click(boardId: "${id}")
+}`;
+const config = {
+  headers: {
+    //prettier-ignore
+    "Authorization": `${accessTokenCookie}`,
+  },
+};
+axios
+  .post("http://localhost:3000/graphql", { query: viewsQuery }, config)
+  .then((res) => {
+    console.log(res.data.data);
+  });

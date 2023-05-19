@@ -6,11 +6,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import * as dotenv from "dotenv";
 import { UserModule } from "./apis/user/user.module";
 import { AuthModule } from "./apis/auth/auth.module";
+import { ViewModule } from "./apis/view/view.module";
 
 dotenv.config();
 
 @Module({
   imports: [
+    ViewModule,
     AuthModule,
     UserModule,
     BoardModule,

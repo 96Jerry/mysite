@@ -36,6 +36,11 @@ __decorate([
     __metadata("design:type", String)
 ], Board.prototype, "content", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], Board.prototype, "views", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ nullable: false }),
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)

@@ -138,7 +138,7 @@ axios
       const fetchBoardQuery = `
       query {
       fetchBoard(id : "${id}")
-      { id, number, title, content, user{userId}, createdAt } } `;
+      { id, number, title, content, user{userId}, createdAt, views } } `;
       await axios
         .post("http://localhost:3000/graphql", {
           query: fetchBoardQuery,
@@ -149,6 +149,7 @@ axios
           const number = fetchBoardData.number;
           const title = fetchBoardData.title;
           const date = fetchBoardData.createdAt;
+          const views = fetchBoardData.views;
 
           // 3. boardlist에 a태그를 추가한다.
           // prettier-ignore
@@ -161,7 +162,7 @@ axios
           readableDate = date.substring(0, 10);
           addDivTag(".board-date", readableDate);
           // 7. board clcik 추가
-          addDivTag(".board-click", "조회수");
+          addDivTag(".board-click", views);
         });
     }
   });
@@ -218,6 +219,7 @@ document.getElementById("search-btn").addEventListener("click", () => {
     title,
     content,
     createdAt,
+    views,
     user{
       userId
     }
@@ -240,7 +242,7 @@ document.getElementById("search-btn").addEventListener("click", () => {
         readableDate = data[i].createdAt.substring(0, 10);
         addDivTag(".board-date", readableDate);
         // 7. board clcik 추가
-        addDivTag(".board-click", "조회수");
+        addDivTag(".board-click", data[i].views);
       }
     });
 });

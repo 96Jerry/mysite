@@ -28,6 +28,10 @@ export class Board {
   @Field(() => String)
   content: string;
 
+  @Column({ default: 0 })
+  @Field(() => Int)
+  views: number;
+
   @CreateDateColumn({ nullable: false })
   @Field(() => Date)
   createdAt: Date;

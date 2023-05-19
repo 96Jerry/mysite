@@ -11,6 +11,7 @@ type Board {
   number: Int!
   title: String!
   content: String!
+  views: Int!
   createdAt: DateTime!
   user: User!
 }
@@ -29,6 +30,7 @@ type Query {
 }
 
 type Mutation {
+  click(boardId: String!): Int!
   login(user: createUserInput!): String!
   restoreAccessToken: String!
   createUser(createUserInput: createUserInput!): String!

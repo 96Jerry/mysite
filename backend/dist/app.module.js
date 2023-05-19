@@ -15,12 +15,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = require("dotenv");
 const user_module_1 = require("./apis/user/user.module");
 const auth_module_1 = require("./apis/auth/auth.module");
+const view_module_1 = require("./apis/view/view.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            view_module_1.ViewModule,
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             board_module_1.BoardModule,
