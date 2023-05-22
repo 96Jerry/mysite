@@ -246,3 +246,22 @@ document.getElementById("search-btn").addEventListener("click", () => {
       }
     });
 });
+
+document.getElementById("file-input").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () => {
+    console.log(reader.result);
+  };
+
+  // const fileQuery = `mutation{
+  //   uploadFile(file: ${e})
+  // }`;
+  // axios
+  //   .post("http://localhost:3000/graphql", { query: fileQuery })
+  //   .then((res) => {
+  //     const data = res.data.data.uploadFile;
+  //     console.log(data);
+  //   });
+});
