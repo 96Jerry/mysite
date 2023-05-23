@@ -1,0 +1,2 @@
+operations {"query":"mutation uploadFile($file: Upload!) {upload(file: $file)}", "variables":{"file":null}}
+map {"0":["variables.file"]}

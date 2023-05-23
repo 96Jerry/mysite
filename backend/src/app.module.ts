@@ -7,11 +7,13 @@ import * as dotenv from "dotenv";
 import { UserModule } from "./apis/user/user.module";
 import { AuthModule } from "./apis/auth/auth.module";
 import { ViewModule } from "./apis/view/view.module";
+import { FileModule } from "./apis/file/file.module";
 
 dotenv.config();
 
 @Module({
   imports: [
+    FileModule,
     ViewModule,
     AuthModule,
     UserModule,

@@ -30,6 +30,7 @@ type Query {
 }
 
 type Mutation {
+  uploadFile(file: Upload!): String!
   click(boardId: String!): Int!
   login(user: createUserInput!): String!
   restoreAccessToken: String!
@@ -39,6 +40,9 @@ type Mutation {
   updateBoard(id: String!, board: CreateBoardInput!): Board!
   deleteBoard(id: String!): String!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input createUserInput {
   userId: String!

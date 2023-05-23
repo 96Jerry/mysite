@@ -16,12 +16,14 @@ const dotenv = require("dotenv");
 const user_module_1 = require("./apis/user/user.module");
 const auth_module_1 = require("./apis/auth/auth.module");
 const view_module_1 = require("./apis/view/view.module");
+const file_module_1 = require("./apis/file/file.module");
 dotenv.config();
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            file_module_1.FileModule,
             view_module_1.ViewModule,
             auth_module_1.AuthModule,
             user_module_1.UserModule,
