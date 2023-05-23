@@ -41,6 +41,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Board.prototype, "views", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], Board.prototype, "image", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ nullable: false }),
     (0, graphql_1.Field)(() => Date),
     __metadata("design:type", Date)

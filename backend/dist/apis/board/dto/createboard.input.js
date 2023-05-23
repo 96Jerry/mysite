@@ -25,8 +25,12 @@ __decorate([
     (0, graphql_1.Field)(() => String),
     __metadata("design:type", String)
 ], CreateBoardInput.prototype, "content", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String),
+    __metadata("design:type", String)
+], CreateBoardInput.prototype, "image", void 0);
 CreateBoardInput = __decorate([
     (0, graphql_1.InputType)()
 ], CreateBoardInput);
 exports.CreateBoardInput = CreateBoardInput;
-//# sourceMappingURL=createboard.input.js.map
+//# sourceMappingURL=createBoard.input.js.map

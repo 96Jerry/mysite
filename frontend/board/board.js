@@ -20,6 +20,7 @@ const query = `query {
       number
       title
       content
+      image
       user{userId}
   }
 }
@@ -35,12 +36,14 @@ axios
     title = data.title;
     content = data.content;
     writer = data.user.userId;
+    image = data.image;
 
     document.title = number;
     document.getElementById("number").innerHTML = number;
     document.getElementById("title").innerHTML = title;
     document.getElementById("content").innerHTML = content;
     document.getElementById("writer").innerHTML = writer;
+    document.getElementById("image").src = image;
   });
 
 // update-board-btn

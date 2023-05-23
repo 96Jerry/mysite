@@ -9,28 +9,28 @@ interface IFileServiceUpload {
 
 @Injectable()
 export class FileService {
-  upload({ file }: IFileServiceUpload) {
-    console.log(file);
-
+  async upload({ file }: IFileServiceUpload): Promise<string> {
     const storage = new Storage({
       projectId: process.env.GCP_PROJECTID,
       keyFilename: process.env.GCP_KEYFILENAME,
-    }).bucket("my-first-website-images");
+    });
+    const bucket = storage.bucket("my-first-website-images");
 
-    const blobStream = storage.file(file.filename).createWriteStream();
+    const result = await new Promise<string>((resolve, reject) => {
+      const blob = bucket.file(file.filename);
+      const blobStream = blob.createWriteStream();
+      file
+        .createReadStream()
+        .pipe(blobStream)
+        .on("finish", () => {
+          const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+          resolve(publicUrl);
+        })
+        .on("error", () => {
+          reject("실패");
+        });
+    });
 
-    file
-      .createReadStream()
-      .pipe(blobStream)
-      .on("finish", () => {
-        console.log("성공");
-      })
-      .on("error", () => {
-        console.log("실패");
-      });
-
-    console.log("파일전송완료");
-
-    return "끝";
+    return result;
   }
 }

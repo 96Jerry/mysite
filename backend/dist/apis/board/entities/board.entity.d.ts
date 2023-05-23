@@ -5,6 +5,7 @@ export declare class Board {
     title: string;
     content: string;
     views: number;
+    image: string;
     createdAt: Date;
     user: User;
 }

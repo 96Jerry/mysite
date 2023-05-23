@@ -9,17 +9,20 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
   const number = document.getElementById("number").value;
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
+  const image = document.getElementById("user-img").src;
   const query = `
       mutation {
         createBoard(board:{
             number:${number},
             title:"${title}",
-            content:"${content}"
+            content:"${content}",
+            image:"${image}"
         }){
             id,
             number,
             title,
-            content
+            content,
+            image
         }
       }
       `;
@@ -41,39 +44,44 @@ document.getElementById("create-board-btn").addEventListener("click", () => {
   });
 });
 
-// 이미지가 업로드되면 구글 클라우드에 저장
+// 이미지가 업로드되면 구글 클라우드에 저장 후 주소값 리턴
 document.getElementById("img-input").addEventListener("change", (e) => {
   const file = e.target.files[0];
-  const formData = new FormData();
-  // formdata 설정
-  formData.append(
-    "operations",
-    JSON.stringify({
-      query: `
-      mutation ($file: Upload!) {
-        uploadFile(file: $file)
-      }
-    `,
-      variables: {
-        file: null,
-      },
-    })
-  );
-  formData.append(
-    "map",
-    JSON.stringify({
-      0: ["variables.file"],
-    })
-  );
-  formData.append("0", file);
+  if (file) {
+    const formData = new FormData();
+    // formdata 설정
+    formData.append(
+      "operations",
+      JSON.stringify({
+        query: `
+        mutation ($file: Upload!) {
+          uploadFile(file: $file)
+        }
+      `,
+        variables: {
+          file: null,
+        },
+      })
+    );
+    formData.append(
+      "map",
+      JSON.stringify({
+        0: ["variables.file"],
+      })
+    );
+    formData.append("0", file);
 
-  // axios 요청
-  axios
-    .post("http://localhost:3000/graphql", formData, {
-      headers: { "x-apollo-operation-name": "uploadFile" },
-    })
-    .then((res) => {
-      const data = res.data.data.uploadFile;
-      document.getElementById("user-img").src = "11";
-    });
+    // axios 요청
+    axios
+      .post("http://localhost:3000/graphql", formData, {
+        headers: { "x-apollo-operation-name": "uploadFile" },
+      })
+      .then((res) => {
+        const data = res.data.data.uploadFile;
+
+        document.getElementById("user-img").src = data;
+      });
+  } else {
+    document.getElementById("user-img").src = "";
+  }
 });

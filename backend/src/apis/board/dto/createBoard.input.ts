@@ -10,4 +10,7 @@ export class CreateBoardInput {
 
   @Field(() => String)
   content: string;
+
+  @Field(() => String)
+  image: string;
 }

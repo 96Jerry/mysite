@@ -12,6 +12,7 @@ type Board {
   title: String!
   content: String!
   views: Int!
+  image: String!
   createdAt: DateTime!
   user: User!
 }
@@ -53,4 +54,5 @@ input CreateBoardInput {
   number: Int!
   title: String!
   content: String!
+  image: String!
 }
