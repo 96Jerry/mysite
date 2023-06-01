@@ -22,9 +22,15 @@ export class FileService {
       file
         .createReadStream()
         .pipe(blobStream)
-        .on("finish", () => {
-          const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-          resolve(publicUrl);
+        .on("finish", async () => {
+          // const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+          const config = {
+            action: "read" as const,
+            expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+          };
+          const [signedUrl] = await blob.getSignedUrl(config);
+
+          resolve(signedUrl);
         })
         .on("error", () => {
           reject("실패");
