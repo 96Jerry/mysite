@@ -1,3 +1,3 @@
 export declare class BoardController {
-    hello(): string;
+    hello(body: any, header: any): string;
 }

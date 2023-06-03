@@ -5,10 +5,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Board } from "./entities/board.entity";
 import { JwtAccessStrategy } from "src/commons/auth/jwt-access.strategy";
 import { User } from "../user/entities/user.entity";
+import { BoardController } from "./board.controller";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Board, User])],
   providers: [BoardResolver, BoardService, JwtAccessStrategy],
-  // controllers: [BoardController],
+  controllers: [BoardController],
 })
 export class BoardModule {}
