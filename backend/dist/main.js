@@ -14,7 +14,7 @@ async function bootstrap() {
         parameterLimit: 1000000,
     }));
     app.enableCors({
-        origin: "http://localhost:5501",
+        origin: "http://127.0.0.1:5501",
         credentials: true,
     });
     await app.listen(3000);
