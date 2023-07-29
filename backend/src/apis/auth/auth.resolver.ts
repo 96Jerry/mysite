@@ -32,13 +32,9 @@ export class AuthResolver {
 
   @Mutation(() => String)
   async login(
-    @Args("user") user: createUserInput, //
-    @Context() context: any
+    @Args("user") user: createUserInput //
   ) {
-    // 1. 유저 아이디를 데이터베이스에서 조회
     const dbUser = await this.userService.findOne({ user });
-    // 2. 유저 비밀번호를 데이터베이스에서 조회
-    // 3. 입력받은 비밀번호와 데이터베이스의 비밀번호를 비교, 일치하면 accessToken, refreshToken 발급
     const checkUser = await bcrypt.compare(user.userPwd, dbUser.userPwd);
 
     let accessToken: string, refreshToken: string;
@@ -48,12 +44,7 @@ export class AuthResolver {
     } else {
       return "fail";
     }
-    context.res.setHeader("set-cookie", [
-      `accessToken=Bearer ${accessToken}; samesite=none; secure; path=/;`,
-      `refreshToken=${refreshToken}; samesite=none; secure; path=/;`,
-    ]);
-
-    return "success";
+    return `accessToken=Bearer ${accessToken}`;
   }
 
   @UseGuards(GqlAuthRefreshGuard)
@@ -65,8 +56,6 @@ export class AuthResolver {
     const accessToken = await this.authService.setAccessToken({
       user: currentUser,
     });
-    // console.log(accessToken);
-    // console.log("================");
     context.res.setHeader(
       "set-cookie",
       `accessToken=Bearer ${accessToken}; path=/;`

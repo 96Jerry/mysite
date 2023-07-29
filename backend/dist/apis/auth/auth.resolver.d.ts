@@ -6,6 +6,6 @@ export declare class AuthResolver {
     private readonly userService;
     constructor(authService: AuthService, userService: UserService);
     isLoggedin(): boolean;
-    login(user: createUserInput, context: any): Promise<"fail" | "success">;
+    login(user: createUserInput): Promise<string>;
     restoreAccessToken(currentUser: any, context: any): Promise<void>;
 }

@@ -116,6 +116,4 @@ const config = {
 };
 axios
   .post("http://localhost:3000/graphql", { query: viewsQuery }, config)
-  .then((res) => {
-    console.log(res.data.data);
-  });
+  .then((res) => {});
