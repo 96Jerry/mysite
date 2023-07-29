@@ -29,7 +29,7 @@ let AuthResolver = class AuthResolver {
     isLoggedin() {
         return true;
     }
-    async login(user, context) {
+    async login(user) {
         const dbUser = await this.userService.findOne({ user });
         const checkUser = await bcrypt.compare(user.userPwd, dbUser.userPwd);
         let accessToken, refreshToken;
@@ -40,11 +40,7 @@ let AuthResolver = class AuthResolver {
         else {
             return "fail";
         }
-        context.res.setHeader("set-cookie", [
-            `accessToken=Bearer ${accessToken}; samesite=none; secure; path=/;`,
-            `refreshToken=${refreshToken}; samesite=none; secure; path=/;`,
-        ]);
-        return "success";
+        return `accessToken=Bearer ${accessToken}`;
     }
     async restoreAccessToken(currentUser, context) {
         const accessToken = await this.authService.setAccessToken({
@@ -63,9 +59,8 @@ __decorate([
 __decorate([
     (0, graphql_1.Mutation)(() => String),
     __param(0, (0, graphql_1.Args)("user")),
-    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [createUser_input_1.createUserInput, Object]),
+    __metadata("design:paramtypes", [createUser_input_1.createUserInput]),
     __metadata("design:returntype", Promise)
 ], AuthResolver.prototype, "login", null);
 __decorate([
